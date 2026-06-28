@@ -974,6 +974,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "huggingface-hub" },
+    { name = "ipykernel" },
     { name = "jupyter" },
 ]
 
@@ -990,6 +991,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "huggingface-hub", specifier = ">=1.21.0" },
+    { name = "ipykernel", specifier = ">=7.3.0" },
     { name = "jupyter", specifier = ">=1.1.1" },
 ]
 
