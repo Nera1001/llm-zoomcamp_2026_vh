@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  kestra_postgres:
+    image: postgres:15.3-alpine
+    container_name: kestra_postgres
+    environment:
+      POSTGRES_USER: kestra
+      POSTGRES_PASSWORD: kestra
+      POSTGRES_DB: kestra
+    volumes:
+      - kestra_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  kestra:
+    image: kestra/kestra:latest
+    container_name: kestra
+    depends_on:
+      - kestra_postgres
+    ports:
+      - "8080:8080"
+      - "6244:6244"
+    volumes:
+      - kestra_data:/app/storage
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JAVA_OPTS=-Xmx2g
+      - KESTRA_DATABASE_URL=jdbc:postgresql://kestra_postgres:5432/kestra
+      - KESTRA_DATABASE_USERNAME=kestra
+      - KESTRA_DATABASE_PASSWORD=kestra
+      # Optional: provide base64-encoded secrets as host env vars before starting
+      # Example: export SECRET_GEMINI_API_KEY=$(echo -n "$GEMINI_API_KEY" | base64)
+      - SECRET_GEMINI_API_KEY=${SECRET_GEMINI_API_KEY:-}
+      - SECRET_OPENAI_API_KEY=${SECRET_OPENAI_API_KEY:-}
+      - SECRET_TAVILY_API_KEY=${SECRET_TAVILY_API_KEY:-}
+    command: ["server","local"]
+
+volumes:
+  kestra_postgres_data:
+    driver: local
+  kestra_data:
+    driver: local
+  # kestra_db removed because Kestra uses Postgres in this compose
+  # kestra_tmp removed to allow container to use its internal /tmp
+
+
