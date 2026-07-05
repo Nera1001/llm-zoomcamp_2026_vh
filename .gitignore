@@ -1,7 +1,6 @@
-.env
-.venv/
+.ipynb_checkpoints/
 __pycache__/
-*.pyc
-faq.db*
-*.db
-*.db-wal
+.venv
+.envrc
+.tmp
+.env
