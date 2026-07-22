@@ -3,4 +3,4 @@ __pycache__/
 .venv
 .envrc
 .tmp
-.env
+.env02-vector-search/embed/models/
