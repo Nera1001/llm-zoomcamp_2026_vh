@@ -14,7 +14,7 @@ DuckDB
 Pydantic Logfire
 ```
 
-The agent application was instrumented with Pydantic Logfire and generated traces after running the following query:
+The agent application was instrumented with Pydantic Logfire. A trace was generated using the following query:
 
 > How do I run Ollama locally?
 
@@ -32,7 +32,7 @@ How many spans does a single agent run produce?
 
 ## Verification
 
-The corresponding trace was inspected in the Pydantic Logfire user interface.
+The corresponding agent trace was inspected in the Pydantic Logfire user interface.
 
 ## Answer
 
@@ -42,15 +42,17 @@ The corresponding trace was inspected in the Pydantic Logfire user interface.
 
 ---
 
-### Question 2
+# Question 2
 
-### Question
+## Question
 
 How many tables did dlt create in the `agent_traces` schema?
 
-### Verification
+## Verification
 
-The `agent_traces` schema contains four tables in total:
+The tables in the `agent_traces` schema were inspected directly in DuckDB.
+
+The local schema contains four tables in total:
 
 ```text
 _dlt_loads
@@ -69,7 +71,7 @@ _dlt_pipeline_state
 _dlt_version
 ```
 
-The verification command was:
+The internal tables were identified using:
 
 ```sql
 SELECT table_name
@@ -85,16 +87,23 @@ Supporting evidence:
 * [`q2-dlt-internal-tables.txt`](evidence/q2-dlt-internal-tables.txt)
 * [`pipeline-run.txt`](evidence/pipeline-run.txt)
 
-### Answer
+## Interpretation
+
+The local implementation produced:
+
+* three internal dlt metadata tables
+* one data table named `spans`
+* four tables in total
+
+Because `4` is not one of the available answer options, the selected multiple-choice answer is:
+
+## Selected Answer
 
 ```text
 3
 ```
 
-This answer refers to the three internal tables automatically created by dlt. Including the loaded `spans` data table, the schema contains four tables in total.
-
-
-
+This selection corresponds to the three internal tables created automatically by dlt. However, the complete local `agent_traces` schema contains four tables when the `spans` data table is included.
 
 ---
 
@@ -118,11 +127,11 @@ The token usage was inspected in the corresponding Pydantic Logfire trace.
 
 # Final Answers
 
-| Question | Selected answer | Local verification               |
-| -------- | --------------: | -------------------------------- |
-| Q1       |           **5** | Verified in the Logfire trace    |
-| Q2       |           **3** | Local pipeline produced 4 tables |
-| Q3       |   **1500–5000** | Verified in the Logfire trace    |
+| Question | Selected answer | Local verification                              |
+| -------- | --------------: | ----------------------------------------------- |
+| Q1       |           **5** | Verified in the Logfire trace                   |
+| Q2       |           **3** | Three internal dlt tables; four tables in total |
+| Q3       |   **1500–5000** | Verified in the Logfire trace                   |
 
 ---
 
@@ -134,13 +143,13 @@ During the homework, the following issues were encountered:
 * SQL statements were entered in zsh instead of a DuckDB or Python session
 * dlt normalized nested Logfire JSON structures into additional tables
 * different normalization settings produced different table structures
-* the debugging expression
+* the following debugging expression was invalid:
 
 ```python
 pipeline.dataset().destination_client().config
 ```
 
-raised:
+It raised:
 
 ```text
 TypeError: 'DuckDbClient' object is not callable
@@ -148,4 +157,8 @@ TypeError: 'DuckDbClient' object is not callable
 
 This error occurred after the pipeline had already completed successfully.
 
-The final pipeline run successfully fetched 16 Logfire records and loaded them into the `agent_traces` DuckDB dataset without failed jobs.
+The final pipeline run:
+
+* fetched 16 Logfire records
+* loaded the records into the `agent_traces` DuckDB dataset
+* completed without failed load jobs
