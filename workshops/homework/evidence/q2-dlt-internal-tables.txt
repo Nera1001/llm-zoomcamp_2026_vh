@@ -1,0 +1,5 @@
+Number of internal dlt tables: 3
+
+_dlt_loads
+_dlt_pipeline_state
+_dlt_version

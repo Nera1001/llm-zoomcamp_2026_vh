@@ -1,7 +1,14 @@
+import logfire
+
 from dataclasses import dataclass
 
 from minsearch import Index
 from pydantic_ai import Agent, RunContext
+
+
+# Logfire instrumentation for Pydantic AI traces
+logfire.configure()
+logfire.instrument_pydantic_ai()
 
 
 # --------------------------------------------------------------------------- #

@@ -1,0 +1,26 @@
+/Users/veneraheddergott/LLM_zoomcamp/llm-zoomcamp_2026_vh-1/workshops/homework/logfire_pipeline.py:41: DeprecationWarning: Querying without a min_timestamp is deprecated
+  rows = client.query_json_rows(sql=sql)
+2026-07-27 00:37:24,903|[WARNING]|58605|140704277811584|homework|validate.py|verify_normalized_table:113|In schema `logfire`: The following columns in table 'spans' did not receive any data during this load and therefore could not have their types inferred:
+  - deployment_environment
+  - exception_message
+  - exception_stacktrace
+  - exception_type
+  - http_method
+  - http_response_status_code
+  - http_route
+  - log_body
+  - otel_status_message
+  - url_full
+  - url_path
+  - url_query
+
+Unless type hints are provided, these columns will not be materialized in the destination.
+One way to provide type hints is to use the 'columns' argument in the '@dlt.resource' decorator.  For example:
+
+@dlt.resource(columns={'deployment_environment': {'data_type': 'text'}})
+
+Fetched 16 Logfire records.
+Pipeline logfire_pipeline load step completed in 0.11 seconds
+1 load package(s) were loaded to destination duckdb and into dataset agent_traces
+The duckdb destination used duckdb:////Users/veneraheddergott/LLM_zoomcamp/llm-zoomcamp_2026_vh-1/workshops/homework/.dlt/data/dev/logfire_traces.duckdb location to store data
+Load package 1785105444.451926 is LOADED and contains no failed jobs

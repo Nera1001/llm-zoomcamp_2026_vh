@@ -157,14 +157,3 @@ Successfully deployed:
 - Public dashboard
 - Cloud job monitoring
 
----
-
-# Acknowledgements
-
-This project was completed as part of the **LLM Zoomcamp 2026** and the **dltHub Workshop**.
-
-Special thanks to:
-
-- Alexey Grigorev
-- DataTalks.Club
-- dltHub

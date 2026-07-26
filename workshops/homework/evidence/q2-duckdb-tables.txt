@@ -1,0 +1,6 @@
+Number of tables: 4
+
+_dlt_loads
+_dlt_pipeline_state
+_dlt_version
+spans
