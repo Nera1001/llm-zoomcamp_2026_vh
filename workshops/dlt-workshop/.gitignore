@@ -204,3 +204,9 @@ __marimo__/
 .claude/
 .claudeignore
 .mcp.json
+
+# Local dlt workspace
+.dlt/
+.python-version
+.venv/
+__pycache__/
