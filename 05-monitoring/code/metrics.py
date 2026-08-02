@@ -25,7 +25,6 @@ def calculate_cost(model, usage):
         cost = (usage.input_tokens * 0.15 + usage.output_tokens * 0.60) / 1_000_000
     return cost
 
-
 class RAGWithMetrics(RAGBase):
 
     def __init__(self, *args, **kwargs):
@@ -39,6 +38,7 @@ class RAGWithMetrics(RAGBase):
         self._log_response(prompt, response, response_time)
         return response.output_text
 
+    
     def _call_llm(self, prompt):
         input_messages = [
             {"role": "developer", "content": self.instructions},
@@ -49,6 +49,7 @@ class RAGWithMetrics(RAGBase):
             input=input_messages
         )
         return response
+    
 
     def _log_response(self, prompt, response, response_time):
         usage = response.usage
@@ -68,3 +69,4 @@ class RAGWithMetrics(RAGBase):
     
         print(call_record)
         self.last_call = call_record
+    

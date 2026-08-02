@@ -1,7 +1,6 @@
 from datetime import datetime
 from db_init import get_db_connection, DB_TIMEZONE
 
-
 def save_feedback(conversation_id, source, relevance=None,
                   explanation=None, score=None):
     timestamp = datetime.now(DB_TIMEZONE)

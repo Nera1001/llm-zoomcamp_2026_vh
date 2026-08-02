@@ -1,15 +1,18 @@
-import json
-
-from pydantic import BaseModel
 from typing import Literal
-from openai import OpenAI
+
 from dotenv import load_dotenv
+from openai import OpenAI
+from pydantic import BaseModel
 
 from evaluation_utils import llm_structured_retry
 
 
 class RelevanceVerdict(BaseModel):
-    relevance: Literal["NON_RELEVANT", "PARTLY_RELEVANT", "RELEVANT"]
+    relevance: Literal[
+        "NON_RELEVANT",
+        "PARTLY_RELEVANT",
+        "RELEVANT",
+    ]
     explanation: str
 
 
@@ -23,6 +26,7 @@ Classify the answer as:
 - NON_RELEVANT: the answer does not address the question
 """.strip()
 
+
 judge_prompt = """
 Question: {question}
 Generated Answer: {answer}
@@ -35,7 +39,7 @@ def evaluate_relevance(question, answer, client=None):
 
     prompt = judge_prompt.format(
         question=question,
-        answer=answer
+        answer=answer,
     )
 
     result, usage = llm_structured_retry(
@@ -47,12 +51,17 @@ def evaluate_relevance(question, answer, client=None):
 
     return result.relevance, result.explanation
 
+
 if __name__ == "__main__":
     load_dotenv()
 
     question = "Can I still join the course?"
     answer = "Yes, you can still join. The course is self-paced."
 
-    relevance, explanation = evaluate_relevance(question, answer)
+    relevance, explanation = evaluate_relevance(
+        question,
+        answer,
+    )
+
     print(relevance)
     print(explanation)
